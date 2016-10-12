@@ -29,54 +29,7 @@ def usage():
     print "bhpnet.py -t 192.168.0.1 -p 5555 -l -e=\"cat /etc/passwd\""
     print "echo 'ABCDEFGHI' | ./bhpnet.py -t 192.168.11.12 -p 135"
     sys.exit(0)
-def main():
-    
-    global listen
-    global port 
-    global execute
-    global upload_destination
-    global target
-    
-    if not len(sys.argv[1:]):
-        usage()
-        
-        
-    try:
-        
-        options, args = getopt.getopt(sys.argv[1:], "hle:t:p:cu",
-                                      ["help","listen","execute","target","port","command","upload"])
-    except getopt.GetoptError as err:
-        print str(err)
-        usage()
-        
-    for option, arg in options:
-        if option in ("-h", "--help"):
-            usage()
-        elif option in ("-l", "--listen"):
-            listen = True
-        elif option in ("-e", "--execute"):
-            execute = arg
-        elif option in ("-c", "--command"):
-            command = True
-        elif option in ("-u", "--upload"):
-            upload = True
-        elif option in ("-t", "--target"):
-            target = arg
-        elif option in ("-p", "--port"):
-            port = int(arg)
-        else:
-            assert False, "Unhandled Option"
-        #check if we are going to listen or send data from stdin
-        if not listen and len(target) and port > 0:
-            buffer = sys.stdin.read()
-            
-            #send data from buffer
-            client_sender(buffer)
-            
-        if listen: 
-            server_loop()
-            
-main()
+
 
 def client_sender(buffer):
     
@@ -219,3 +172,53 @@ def run_command(command):
     #send output back to client
     
     return output
+
+
+def main():
+    
+    global listen
+    global port 
+    global execute
+    global upload_destination
+    global target
+    
+    if not len(sys.argv[1:]):
+        usage()
+        
+        
+    try:
+        
+        options, args = getopt.getopt(sys.argv[1:], "hle:t:p:cu",
+                                      ["help","listen","execute","target","port","command","upload"])
+    except getopt.GetoptError as err:
+        print str(err)
+        usage()
+        
+    for option, arg in options:
+        if option in ("-h", "--help"):
+            usage()
+        elif option in ("-l", "--listen"):
+            listen = True
+        elif option in ("-e", "--execute"):
+            execute = arg
+        elif option in ("-c", "--command"):
+            command = True
+        elif option in ("-u", "--upload"):
+            upload = True
+        elif option in ("-t", "--target"):
+            target = arg
+        elif option in ("-p", "--port"):
+            port = int(arg)
+        else:
+            assert False, "Unhandled Option"
+        #check if we are going to listen or send data from stdin
+        if not listen and len(target) and port > 0:
+            buffer = sys.stdin.read()
+            
+            #send data from buffer
+            client_sender(buffer)
+            
+        if listen: 
+            server_loop()
+            
+main()
