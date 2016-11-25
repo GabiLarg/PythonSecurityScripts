@@ -1,0 +1,6 @@
+{
+  "name": "Rainbow Hat",
+  "tagline": "python security tools",
+  "body": "# Hello World\r\nThis page is intended to document the creation of a tool in python with easy GUI for developers test the security of their systems in a easier way. \r\nInitially I will document the test os scripts and some known tools in python the penetration test. \r\n ",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
